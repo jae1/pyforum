@@ -5,9 +5,9 @@
     <table class="table">
         <thead>
         <tr class="thead-dark">
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성일시</th>
+            <th>Number</th>
+            <th>Subject</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
@@ -17,6 +17,13 @@
             <td>{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td>
             <td>
                 <a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a>
+                {% if question.answer_set|length > 0 %}
+                    {% if question.answer_set|length == 1 %}
+                        <span class="text-danger small ml-2">{{ question.answer_set|length }} reply</span>
+                    {% else %}
+                        <span class="text-danger small ml-2">{{ question.answer_set|length }} replies</span>
+                    {% endif %}
+                {% endif %}
             </td>
             <td>{{ question.create_date|datetime }}</td>
         </tr>
