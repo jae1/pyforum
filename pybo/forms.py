@@ -16,3 +16,7 @@ class NewUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
     password1 = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', 'Passwords do not match')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+
+class UserLoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
+    password = PasswordField('Password', validators=[DataRequired()])
