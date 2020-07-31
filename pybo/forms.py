@@ -20,3 +20,6 @@ class NewUserForm(FlaskForm):
 class UserLoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
     password = PasswordField('Password', validators=[DataRequired()])
+
+class CommentForm(FlaskForm):
+    content = TextAreaField('Body', validators=[DataRequired()])
