@@ -24,13 +24,6 @@ def create():
         return redirect(url_for('main.index'))
     return render_template('question/question_form.html', form=form)
 
-# @bp.route('/list/')
-# def _list():
-#     page = request.args.get('page', type = int, default = 1)  # page
-#     question_list = Question.query.order_by(Question.create_date.desc())
-#     question_list = question_list.paginate(page, per_page = 20)
-#     return render_template('question/question_list.html', question_list=question_list)
-
 @bp.route('/list/')
 def _list():
     # 입력 파라미터
