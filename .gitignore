@@ -140,3 +140,9 @@ cython_debug/
 
 # Shell File
 .sh
+
+# pybo files
+.idea
+pybo.db
+*.pyc
+__pycache__
