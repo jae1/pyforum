@@ -2,6 +2,23 @@
 {% block content %}
 
 <div class="container my-3">
+    <div class="row justify-content-between my-3">
+        <div class="col-2">
+            <select class="form-control so">
+                <option value="recent" {% if so=='recent' %}selected{% endif %}>Recent</option>
+                <option value="recommend" {% if so=='recommend' %}selected{% endif %}>Upvote</option>
+                <option value="popular" {% if so=='popular' %}selected{% endif %}>Popular</option>
+            </select>
+        </div>
+
+        <div class="col-4 input-group">
+            <input type="text" class="form-control kw" value="{{ kw or '' }}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">Search</button>
+            </div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
         <tr class="text-center thead-dark">
@@ -48,7 +65,7 @@
         <!-- Previous Page -->
         {% if question_list.has_prev %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ question_list.prev_num }}">Previous</a>
+            <a class="page-link" data-page="{{ question_list.prev_num }}" href="#">Previous</a>
         </li>
         {% else %}
         <li class="page-item disabled">
@@ -59,7 +76,7 @@
             {% if page_num %}
                 {% if page_num != question_list.page %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                    <a class="page-link" data-page="{{ page_num }}" href="#">{{ page_num }}</a>
                 </li>
                 {% else %}
                 <li class="page-item active" aria-current="page">
@@ -76,7 +93,7 @@
         <!-- Next Page -->
         {% if question_list.has_next %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ question_list.next_num }}">Next</a>
+            <a class="page-link" data-page="{{ question_list.next_num }}" href="#">Next</a>
         </li>
         {% else %}
         <li class="page-item disabled">
@@ -86,4 +103,29 @@
     </ul>
     <a href="{{ url_for('question.create') }}" class="btn btn-primary">Write</a>
 </div>
+<form id="searchForm" method="get" action="{{ url_for('question._list') }}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" id="so" name="so" value="{{ so }}">
+</form>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $(".page-link").on('click', function() {
+            $("#page").val($(this).data("page"));
+            $("#searchForm").submit();
+        });
+        $("#btn_search").on('click', function() {
+            $("#kw").val($(".kw").val());
+            $("#page").val(1);
+            $("#searchForm").submit();
+        });
+        $(".so").on('change', function() {
+            $("#so").val($(this).val());
+            $("#page").val(1);
+            $("#searchForm").submit();
+        });
+    });
+</script>
+    
 {% endblock %}
